@@ -1,7 +1,9 @@
 {
     "scripts": {
         "start-part-1": "node ./part-1/script.js",
-        "dev-part-1": "nodemon ./part-1/script.js"
+        "dev-part-1": "nodemon ./part-1/script.js",
+        "start-part-2": "node ./part-2/script.js",
+        "dev-part-2": "nodemon ./part-2/script.js"
     },
     "dependencies": {
         "nodemon": "^2.0.22"
