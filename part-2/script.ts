@@ -21,7 +21,7 @@ const playerScores = players.map(player => {
     for (let index = 0; index < arr.length; index++) {
         const score = arr[index];
         const nextScore = arr[index + 1];
-        console.log(score, nextScore)
+
         if (score === 10) {
             lastIndex = index;
             frames.push([10]);
@@ -39,15 +39,20 @@ const playerScores = players.map(player => {
 
     frames.forEach(
         (frame) => {
-            frame.forEach((score) => totalScore += score)
             if (frame[0] === 10) {
+                console.log("frame0:", frame[0], 'frame1:', frame[1])
                 totalScore += 10;
-            } else if (frame[0] + frame[1] === 10) {
-                totalScore += 5
+                totalScore += frame[0];
+                return;
+            }
+
+            if (frame[0] + frame[1] === 10) {
+                totalScore += 5;
+                totalScore += frame[0];
+                totalScore += frame[1];
             }
         }
     );
-
     return { name, totalScore };
 });
 
