@@ -3,7 +3,9 @@
         "start-part-1": "node ./part-1/script.js",
         "dev-part-1": "nodemon ./part-1/script.js",
         "start-part-2": "node ./part-2/script.ts",
-        "dev-part-2": "nodemon ./part-2/script.ts"
+        "dev-part-2": "nodemon ./part-2/script.ts",
+        "start-part-3": "node ./part-3/script.ts",
+        "dev-part-3": "nodemon ./part-3/script.ts"
     },
     "dependencies": {
         "nodemon": "^2.0.22",
