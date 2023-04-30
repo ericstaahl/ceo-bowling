@@ -208,10 +208,28 @@ const players2 = file2.split(/\r?\n/);
 const players3 = file3.split(/\r?\n/);
 const players4 = file4.split(/\r?\n/);
 
-const res1 = players1.map((player) => calculatePart1(player));
-const res2 = players2.map((player) => calculatePart2(player));
-const res3 = players3.map((player) => calculatePart3(player));
-const res4 = players4.map((player) => calculatePart4(player));
+// function to calculate the total score for each player based on each ruleset
+const calculateTotalRes = (player: string) => {
+    const { totalScore: totalScore1, name } = calculatePart1(player);
+    const { totalScore: totalScore2 } = calculatePart2(player);
+    const { totalScore: totalScore3 } = calculatePart3(player);
+    const { totalScore: totalScore4 } = calculatePart4(player);
+
+    let totalScore = 0;
+    totalScore += totalScore1;
+    totalScore += totalScore2;
+    totalScore += totalScore3;
+    totalScore += totalScore4;
+
+    return { name, totalScore };
+};
+
+// run all score calculations
+
+const res1 = players1.map((player) => calculateTotalRes(player));
+const res2 = players2.map((player) => calculateTotalRes(player));
+const res3 = players3.map((player) => calculateTotalRes(player));
+const res4 = players4.map((player) => calculateTotalRes(player));
 
 const totalScoresAllPlayers: { name: string; totalScore: number }[] = [];
 
