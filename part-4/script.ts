@@ -37,6 +37,7 @@ const playerScores = players.map((player) => {
     }
     //calculate score
 
+    // caclulate score without bonuses
     let totalScore = arr.reduce(
         (score, currentScore) => score + currentScore,
         0
@@ -45,19 +46,19 @@ const playerScores = players.map((player) => {
     let strikeBonusTurn: null | number = null;
     let isSpareBonus = false;
 
+    // Add bonuses to score.
     frames.forEach((frame) => {
         if (isSpareBonus) {
+            // console.log("Adding spare bonus");
             totalScore += frame[0];
             isSpareBonus = false;
         }
-
-        if (strikeBonusTurn && strikeBonusTurn >= 2) strikeBonusTurn === null;
 
         if (strikeBonusTurn !== null) {
             if (
                 frame.length === 1 &&
                 strikeBonusTurn !== null &&
-                strikeBonusTurn < 2
+                strikeBonusTurn < 3
             ) {
                 totalScore += frame[0];
 
@@ -65,7 +66,11 @@ const playerScores = players.map((player) => {
                 strikeBonusTurn += 1;
             }
 
-            if (frame.length === 2) {
+            if (
+                frame.length === 2 &&
+                strikeBonusTurn !== null &&
+                strikeBonusTurn < 3
+            ) {
                 totalScore += frame[0];
                 totalScore += frame[1];
 
@@ -75,16 +80,11 @@ const playerScores = players.map((player) => {
         }
 
         if (frame.length === 1) {
-            totalScore += 10;
-
-            strikeBonusTurn = 0;
+            strikeBonusTurn = 1;
             return;
         }
 
         if (frame[0] + frame[1] === 10) {
-            totalScore += frame[0];
-            totalScore += frame[1];
-
             isSpareBonus = true;
         }
     });
@@ -98,4 +98,5 @@ const compareFn = (
 
 const winner = playerScores.sort((a, b) => compareFn(a, b))[0];
 
+console.log(playerScores.sort((a, b) => compareFn(a, b)));
 console.log(winner);
