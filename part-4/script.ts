@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 
-const file = fs.readFileSync(path.resolve(__dirname, "./series03.txt"), {
+const file = fs.readFileSync(path.resolve(__dirname, "./series04.txt"), {
     encoding: "utf-8",
 });
 
@@ -42,23 +42,50 @@ const playerScores = players.map((player) => {
         0
     );
 
-    let strikeBonus = 0;
-    let spareBonus = 0;
-    console.log("Strike bonus:", strikeBonus, "Spare bonus:", spareBonus);
+    let strikeBonusTurn: null | number = null;
+    let isSpareBonus = false;
 
     frames.forEach((frame) => {
+        if (isSpareBonus) {
+            totalScore += frame[0];
+            isSpareBonus = false;
+        }
+
+        if (strikeBonusTurn && strikeBonusTurn >= 2) strikeBonusTurn === null;
+
+        if (strikeBonusTurn !== null) {
+            if (
+                frame.length === 1 &&
+                strikeBonusTurn !== null &&
+                strikeBonusTurn < 2
+            ) {
+                totalScore += frame[0];
+
+                // add to bonus turn count
+                strikeBonusTurn += 1;
+            }
+
+            if (frame.length === 2) {
+                totalScore += frame[0];
+                totalScore += frame[1];
+
+                // reset
+                strikeBonusTurn = null;
+            }
+        }
+
         if (frame.length === 1) {
             totalScore += 10;
-            totalScore += strikeBonus;
 
-            strikeBonus += 2;
+            strikeBonusTurn = 0;
             return;
         }
-        if (frame[0] + frame[1] === 10) {
-            totalScore += 5;
-            totalScore += spareBonus;
 
-            spareBonus += 1;
+        if (frame[0] + frame[1] === 10) {
+            totalScore += frame[0];
+            totalScore += frame[1];
+
+            isSpareBonus = true;
         }
     });
     return { name, totalScore };
