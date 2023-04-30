@@ -43,44 +43,34 @@ const playerScores = players.map((player) => {
         0
     );
 
-    let strikeBonusTurn: null | number = null;
+    let isStrikeBonus = false;
     let isSpareBonus = false;
 
     // Add bonuses to score.
     frames.forEach((frame) => {
         if (isSpareBonus) {
-            // console.log("Adding spare bonus");
+            console.log("Adding spare bonus");
             totalScore += frame[0];
             isSpareBonus = false;
         }
 
-        if (strikeBonusTurn !== null) {
-            if (
-                frame.length === 1 &&
-                strikeBonusTurn !== null &&
-                strikeBonusTurn < 3
-            ) {
+        if (isStrikeBonus) {
+            console.log("Adding strike bonus");
+            if (frame.length === 1) {
                 totalScore += frame[0];
-
-                // add to bonus turn count
-                strikeBonusTurn += 1;
             }
 
-            if (
-                frame.length === 2 &&
-                strikeBonusTurn !== null &&
-                strikeBonusTurn < 3
-            ) {
+            if (frame.length === 2) {
                 totalScore += frame[0];
                 totalScore += frame[1];
 
                 // reset
-                strikeBonusTurn = null;
+                isStrikeBonus = false;
             }
         }
 
         if (frame.length === 1) {
-            strikeBonusTurn = 1;
+            isStrikeBonus = true;
             return;
         }
 
@@ -98,5 +88,5 @@ const compareFn = (
 
 const winner = playerScores.sort((a, b) => compareFn(a, b))[0];
 
-console.log(playerScores.sort((a, b) => compareFn(a, b)));
+// console.log(playerScores.sort((a, b) => compareFn(a, b)));
 console.log(winner);
