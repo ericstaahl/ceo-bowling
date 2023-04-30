@@ -1,6 +1,9 @@
 # ceo-bowling
 ## Instructions 
 
+### Prerequisites
+- Node and npm installed
+
 ### Step 1
 Run
 ```
