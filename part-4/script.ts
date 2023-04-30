@@ -44,10 +44,15 @@ const playerScores = players.map((player) => {
     );
 
     let isStrikeBonus = false;
+    let isDoubleStrikeBonus = false;
     let isSpareBonus = false;
 
     // Add bonuses to score.
     frames.forEach((frame) => {
+        if (isDoubleStrikeBonus) {
+            totalScore += frame[0];
+            isDoubleStrikeBonus = false;
+        }
         if (isSpareBonus) {
             console.log("Adding spare bonus");
             totalScore += frame[0];
@@ -70,6 +75,7 @@ const playerScores = players.map((player) => {
         }
 
         if (frame.length === 1) {
+            if (isStrikeBonus) isDoubleStrikeBonus = true;
             isStrikeBonus = true;
             return;
         }
